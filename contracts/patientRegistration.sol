@@ -1,28 +1,25 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract PatientRegistration {
-    struct Patient {
-        string name;
-        uint age;
-        string gender;
-        string addr;
-        string medicalHistory;
-    }
+contract PatientRegistry {
+struct Patient {
+  bool registered;
+  string name;
+  uint age;
+  string gender;
+  string addr;
+  string medicalHistory;
+}
 
-    event PatientRegistered(uint id);
+  mapping(address => Patient) public patients;
 
-    mapping(uint => Patient) public patients;
-    uint public patientCount = 0;
+  function registerPatient(string memory name, uint age, string memory gender, string memory addr, string memory medicalHistory) public {
+    patients[msg.sender] = Patient(true, name, age, gender, addr, medicalHistory);
+  }
 
-    function registerPatient(string memory name, uint age, string memory gender, string memory addr, string memory medicalHistory) public {
-        patients[patientCount] = Patient(name, age, gender, addr, medicalHistory);
-        emit PatientRegistered(patientCount);
-        patientCount++;
-    }
-
-    function getPatient(uint id) public view returns (string memory name, uint age, string memory gender, string memory addr, string memory medicalHistory) {
-        Patient memory patient = patients[id];
-        return (patient.name, patient.age, patient.gender, patient.addr, patient.medicalHistory);
-    }
+function getPatient(address patientAddress) public view returns (string memory name, uint age, string memory gender, string memory addr, string memory medicalHistory) {
+  require(patients[patientAddress].registered, "Patient not found");
+  Patient memory patient = patients[patientAddress];
+  return (patient.name, patient.age, patient.gender, patient.addr, patient.medicalHistory);
+}
 }
