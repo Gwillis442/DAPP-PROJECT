@@ -10,11 +10,14 @@ contract PatientRegistration {
         string medicalHistory;
     }
 
+    event PatientRegistered(uint id);
+
     mapping(uint => Patient) public patients;
     uint public patientCount = 0;
 
     function registerPatient(string memory name, uint age, string memory gender, string memory addr, string memory medicalHistory) public {
         patients[patientCount] = Patient(name, age, gender, addr, medicalHistory);
+        emit PatientRegistered(patientCount);
         patientCount++;
     }
 
