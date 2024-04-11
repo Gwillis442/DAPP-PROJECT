@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
 
-const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const contractAddress = "0x405a439617439e6DBf3FBF2aAa1d0e8490567728";
 
 export default function App() {
   const [address, setAddress] = useState('');
@@ -13,6 +13,25 @@ export default function App() {
   const [addr, setAddr] = useState('');
   const [medicalHistory, setMedicalHistory] = useState('');
   
+  async function registerPatient(e) {
+    e.preventDefault();
+  
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, [
+      "function registerPatient(string name, uint age, string gender, string addr, string medicalHistory) public"
+    ], signer);
+  
+    try {
+      const tx = await contract.registerPatient(name, age, gender, addr, medicalHistory);
+      await tx.wait();
+      setIsRegistered(true);
+      console.log("Patient registered successfully");
+    } catch (error) {
+      console.error("Failed to register patient:", error);
+    }
+  }
+  
   async function retrievePatient(e) {
     e.preventDefault();
   
@@ -23,32 +42,21 @@ export default function App() {
     ], signer);
   
     try {
-      const patient = await contract.getPatient(address);
+      const data = await contract.getPatient(address);
+      const patient = {
+        name: data[0],
+        age: data[1].toNumber(),
+        gender: data[2],
+        addr: data[3],
+        medicalHistory: data[4]
+      };
       setPatient(patient);
       setIsRegistered(true);
+      console.log("Patient retrieved successfully:", patient);
     } catch (error) {
       console.error("Failed to retrieve patient:", error);
       setIsRegistered(false);
     }
-  }
-  
-  async function registerPatient(e) {
-    e.preventDefault();
-  
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, [
-    "function registerPatient(string name, uint age, string gender, string addr, string medicalHistory) public"
-  ], signer);
-
-  try {
-    const tx = await contract.registerPatient(name, age, gender, addr, medicalHistory);
-    await tx.wait();
-    setIsRegistered(true);
-  } catch (error) {
-    console.error("Failed to register patient:", error);
-  }
-    
   }
   
   return (
