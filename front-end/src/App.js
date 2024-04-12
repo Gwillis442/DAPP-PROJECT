@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
+import './App.css';
 
 const contractAddress = "0x405a439617439e6DBf3FBF2aAa1d0e8490567728";
 
@@ -60,23 +61,23 @@ export default function App() {
   }
   
   return (
-    <div>
+    <div className="app">
       <form onSubmit={retrievePatient}>
         <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder="Ethereum address" />
-        <button type="submit">Retrieve Patient</button>
+        <button type="submit" id='getPatient'>Retrieve Patient</button>
       </form>
       {!isRegistered && (
-        <form onSubmit={registerPatient}>
+        <form onSubmit={registerPatient}className="register-form">
             <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Name" required />
             <input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="Age" required />
             <input type="text" value={gender} onChange={e => setGender(e.target.value)} placeholder="Gender" required />
             <input type="text" value={addr} onChange={e => setAddr(e.target.value)} placeholder="Address" required />
-            <input type="text" value={medicalHistory} onChange={e => setMedicalHistory(e.target.value)} placeholder="Medical History" required />
+            <textarea value={medicalHistory} onChange={e => setMedicalHistory(e.target.value)} placeholder="Medical History" required />
             <button type="submit">Register Patient</button>
         </form>
       )}
       {patient && (
-      <div>
+      <div className="patient-details">
         <h2>Patient Details</h2>
         <p>Name: {patient.name}</p>
         <p>Age: {patient.age}</p>
