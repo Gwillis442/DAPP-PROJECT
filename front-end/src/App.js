@@ -16,13 +16,15 @@ export default function App() {
   
   async function registerPatient(e) {
     e.preventDefault();
-  
+
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(contractAddress, [
       "function registerPatient(string name, uint age, string gender, string addr, string medicalHistory) public"
     ], signer);
   
+    
     try {
       const tx = await contract.registerPatient(name, age, gender, addr, medicalHistory);
       await tx.wait();
@@ -35,7 +37,8 @@ export default function App() {
   
   async function retrievePatient(e) {
     e.preventDefault();
-  
+    
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(contractAddress, [
