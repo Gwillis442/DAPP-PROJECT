@@ -13,6 +13,7 @@ export default function App() {
   const [gender, setGender] = useState('');
   const [addr, setAddr] = useState('');
   const [medicalHistory, setMedicalHistory] = useState('');
+  const [isPatientAdded, setIsPatientAdded] = useState(false);
   
   async function registerPatient(e) {
     e.preventDefault();
@@ -24,20 +25,22 @@ export default function App() {
       "function registerPatient(string name, uint age, string gender, string addr, string medicalHistory) public"
     ], signer);
   
-    
+
     try {
       const tx = await contract.registerPatient(name, age, gender, addr, medicalHistory);
       await tx.wait();
       setIsRegistered(true);
+      setIsPatientAdded(true);
       console.log("Patient registered successfully");
     } catch (error) {
       console.error("Failed to register patient:", error);
     }
   }
   
+
   async function retrievePatient(e) {
     e.preventDefault();
-    
+    try {
     await window.ethereum.request({ method: 'eth_requestAccounts' });
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -45,7 +48,7 @@ export default function App() {
       "function getPatient(address patientAddress) public view returns (string name, uint age, string gender, string addr, string medicalHistory)"
     ], signer);
   
-    try {
+    
       const data = await contract.getPatient(address);
       const patient = {
         name: data[0],
@@ -78,6 +81,9 @@ export default function App() {
             <textarea value={medicalHistory} onChange={e => setMedicalHistory(e.target.value)} placeholder="Medical History" required />
             <button type="submit">Register Patient</button>
         </form>
+      )}
+      {isPatientAdded && (
+        <p>Patient added successfully!</p>
       )}
       {patient && (
       <div className="patient-details">
