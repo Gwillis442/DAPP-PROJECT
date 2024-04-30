@@ -11,9 +11,9 @@ struct Patient {
   string medicalHistory;
 }
 
-  mapping(address => Patient) public patients;
+mapping(address => Patient) public patients;
 
-  function registerPatient(string memory name, uint age, string memory gender, string memory addr, string memory medicalHistory) public {
+function registerPatient(string memory name, uint age, string memory gender, string memory addr, string memory medicalHistory) public {
     patients[msg.sender] = Patient(true, name, age, gender, addr, medicalHistory);
   }
 
@@ -22,4 +22,5 @@ function getPatient(address patientAddress) public view returns (string memory n
   Patient memory patient = patients[patientAddress];
   return (patient.name, patient.age, patient.gender, patient.addr, patient.medicalHistory);
 }
-}
+
+

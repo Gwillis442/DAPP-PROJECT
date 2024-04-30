@@ -68,6 +68,7 @@ export default function App() {
   
   return (
     <div className="app">
+      <h1>Medicords</h1>
       <form onSubmit={retrievePatient}>
         <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder="Ethereum address" />
         <button type="submit" id='getPatient'>Retrieve Patient</button>
