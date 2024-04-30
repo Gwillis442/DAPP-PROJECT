@@ -1,13 +1,15 @@
-# Sample Hardhat Project
+# Medicord
+```
+This Decentralized application demonstrates medical records being stored on the blockchain to allow secure retireveal wherever one needs it.
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+To run this application:
+have node and npm installed
+Metamask and a etheruem wallet
+Have Metamask on the Sepolia testnet
+clone the repository
 
-Try running some of the following tasks:
+cd front-end
+npm start
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
+this will load up a localhost react app that will allow someone to access and upload "medical records" to the etheruem network.
 ```
