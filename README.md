@@ -15,17 +15,13 @@ To install Patient-DApp, follow these steps:
     ```
 2. Navigate to the project directory:
     ```bash
-    cd patient-dapp
+    cd DAPP-Project/front-end
     ```
 3. Install the dependencies:
     ```bash
     npm install
-    ```
-4. Navigate to front-end directory:
-    ```bash
-    cd front-end
-    ```    
-5. Start the development server:
+    ``` 
+4. Start the development server:
     ```bash
     npm start
     ```
