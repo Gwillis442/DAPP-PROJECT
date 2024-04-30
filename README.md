@@ -11,5 +11,5 @@ clone the repository
 cd front-end
 npm start
 
-this will load up a localhost react app that will allow some to access and upload "medical records" to the etheruem network.
+this will load up a localhost react app that will allow someone to access and upload "medical records" to the etheruem network.
 ```
