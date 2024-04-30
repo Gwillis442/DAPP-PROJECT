@@ -15,7 +15,7 @@ To install Patient-DApp, follow these steps:
     ```
 2. Navigate to the project directory:
     ```bash
-    cd DAPP-Project/front-end
+    cd DAPP-PROJECT/front-end
     ```
 3. Install the dependencies:
     ```bash
