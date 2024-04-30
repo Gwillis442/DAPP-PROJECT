@@ -48,4 +48,3 @@ Please note that you will need to be connected to the Sepolia Test network to re
 
 ---
 
-Remember to replace `https://github.com/yourusername/patient-dapp.git` with the actual URL of your GitHub repository.
