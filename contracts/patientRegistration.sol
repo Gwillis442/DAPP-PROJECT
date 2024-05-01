@@ -23,4 +23,4 @@ function getPatient(address patientAddress) public view returns (string memory n
   return (patient.name, patient.age, patient.gender, patient.addr, patient.medicalHistory);
 }
 
-
+}

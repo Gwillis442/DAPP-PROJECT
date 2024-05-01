@@ -1,31 +1,40 @@
+// Importing necessary modules from react and ethers.js
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import './App.css';
 
+// The Ethereum contract address
 const contractAddress = "0x405a439617439e6DBf3FBF2aAa1d0e8490567728";
 
+// The main component of the app
 export default function App() {
-  const [address, setAddress] = useState('');
-  const [patient, setPatient] = useState(null);
-  const [isRegistered, setIsRegistered] = useState(true);
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [addr, setAddr] = useState('');
-  const [medicalHistory, setMedicalHistory] = useState('');
-  const [isPatientAdded, setIsPatientAdded] = useState(false);
-  
+  // State variables for the app
+  const [address, setAddress] = useState(''); // Ethereum address of the patient
+  const [patient, setPatient] = useState(null); // Patient data
+  const [isRegistered, setIsRegistered] = useState(true); // Registration status
+  const [name, setName] = useState(''); // Patient's name
+  const [age, setAge] = useState(''); // Patient's age
+  const [gender, setGender] = useState(''); // Patient's gender
+  const [addr, setAddr] = useState(''); // Patient's physical address
+  const [medicalHistory, setMedicalHistory] = useState(''); // Patient's medical history
+  const [isPatientAdded, setIsPatientAdded] = useState(false); // Status of patient addition
+
+  // Function to register a patient
   async function registerPatient(e) {
     e.preventDefault();
 
+    // Requesting access to the user's Ethereum accounts
     await window.ethereum.request({ method: 'eth_requestAccounts' });
+    // Creating a new Ethereum provider
     const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // Getting the signer from the provider
     const signer = provider.getSigner();
+    // Creating a new contract instance
     const contract = new ethers.Contract(contractAddress, [
       "function registerPatient(string name, uint age, string gender, string addr, string medicalHistory) public"
     ], signer);
-  
 
+    // Registering the patient
     try {
       const tx = await contract.registerPatient(name, age, gender, addr, medicalHistory);
       await tx.wait();
@@ -36,19 +45,19 @@ export default function App() {
       console.error("Failed to register patient:", error);
     }
   }
-  
 
+  // Function to retrieve a patient
   async function retrievePatient(e) {
     e.preventDefault();
     try {
-    await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, [
-      "function getPatient(address patientAddress) public view returns (string name, uint age, string gender, string addr, string medicalHistory)"
-    ], signer);
-  
-    
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, [
+        "function getPatient(address patientAddress) public view returns (string name, uint age, string gender, string addr, string medicalHistory)"
+      ], signer);
+
+      // Retrieving the patient
       const data = await contract.getPatient(address);
       const patient = {
         name: data[0],
@@ -65,7 +74,8 @@ export default function App() {
       setIsRegistered(false);
     }
   }
-  
+
+
   return (
     <div className="app">
       <h1>Medicords</h1>
