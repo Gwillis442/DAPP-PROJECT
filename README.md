@@ -11,7 +11,7 @@ To install Patient-DApp, follow these steps:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/Gwillis442/patient-dapp.git
+    git clone https://github.com/Gwillis442/DAPP-PROJECT
     ```
 2. Navigate to the project directory:
     ```bash
